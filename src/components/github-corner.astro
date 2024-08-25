@@ -3,14 +3,14 @@
   aria-label="View source on GitHub"
   class="absolute right-0 top-0 z-10 text-black hover:text-black focus:ring-0 focus:ring-offset-0"
 >
-  <!-- SVG del sintetizador en el corner, ahora más grande e inclinado -->
+  <!-- SVG del sintetizador inclinado hacia el otro lado y más grande -->
   <svg
     class="fill-white"
     width="100"
     height="100"
     viewBox="0 0 250 250"
     aria-hidden="true"
-    style="position: absolute; top: 0; right: 0; transform: rotate(-15deg);"
+    style="position: absolute; top: 0; right: 0; transform: rotate(15deg);" <!-- Cambio de inclinación -->
   >
     <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
 
@@ -78,11 +78,11 @@
     }
     20%,
     60% {
-      transform: rotate(-25deg);
+      transform: rotate(25deg);
     }
     40%,
     80% {
-      transform: rotate(10deg);
+      transform: rotate(-10deg);
     }
   }
 
@@ -95,3 +95,4 @@
     }
   }
 </style>
+
