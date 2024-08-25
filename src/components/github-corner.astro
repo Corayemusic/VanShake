@@ -1,100 +1,141 @@
-<a
-  href="https://github.com/mhyfritz/astro-landing-page"
-  aria-label="View source on GitHub"
-  class="absolute right-0 top-0 z-10 text-black hover:text-black focus:ring-0 focus:ring-offset-0"
->
-  <!-- Triángulo blanco -->
-  <svg
-    class="fill-white"
-    width="100"
-    height="100"
-    viewBox="0 0 250 250"
-    aria-hidden="true"
-    style="position: absolute; top: 0; right: 0;"
-  >
-    <path d="M0,0 L115,115 L130,115 L250,250 L250,0 Z"></path>
-
-    <!-- SVG del sintetizador más grande y reposicionado -->
-    <g class="synth-body" transform="translate(70, 70) scale(4.5) rotate(-40deg)">
-      <!-- Cuerpo del sintetizador -->
-      <rect x="10" y="20" width="80" height="40" fill="black" stroke="white" />
-
-      <!-- Teclas del sintetizador -->
-      <rect class="key" x="10" y="20" width="10" height="15" fill="white" />
-      <rect class="key" x="25" y="20" width="10" height="15" fill="white" />
-      <rect class="key" x="40" y="20" width="10" height="15" fill="white" />
-      <rect class="key" x="55" y="20" width="10" height="15" fill="white" />
-
-      <!-- Perillas del sintetizador -->
-      <circle class="knob" cx="15" cy="10" r="3" fill="gray" />
-      <circle class="knob" cx="30" cy="10" r="3" fill="gray" />
-      <circle class="knob" cx="45" cy="10" r="3" fill="gray" />
-      <circle class="knob" cx="60" cy="10" r="3" fill="gray" />
-    </g>
-  </svg>
-</a>
-
-<style>
-  /* Estilo y animaciones del sintetizador en el corner */
-
-  /* Animación de las teclas */
-  a:hover .key {
-    animation: key-anim 0.5s ease-in-out infinite;
-  }
-
-  @keyframes key-anim {
-    0%,
-    100% {
-      fill: white;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Waveform with Synthesizer</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #333;
     }
-    50% {
-      fill: yellow;
+    #waveform {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      overflow: hidden;
     }
-  }
+    #waveform-canvas {
+      display: block;
+    }
+    #synth-container {
+      position: absolute;
+      width: 800px; /* Width of the container */
+      height: 300px; /* Height of the container */
+      transform: rotate(-90deg); /* Rotate the container */
+      transform-origin: center; /* Rotate around the center */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #synth {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+    }
+    .key {
+      width: 100px; /* Increase the width as needed */
+      height: 250px; /* Increase the height as needed */
+      background: white;
+      border: 1px solid black;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin: 0 5px;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+    }
+    .key.black {
+      width: 70px; /* Increase the width as needed */
+      height: 180px; /* Increase the height as needed */
+      background: black;
+      position: absolute;
+      margin-left: -35px; /* Adjust positioning for black keys */
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="waveform">
+    <canvas id="waveform-canvas"></canvas>
+    <div id="synth-container">
+      <div id="synth">
+        <div class="key-container">
+          <div class="key"></div>
+          <div class="key black" style="left: 80px;"></div> <!-- Example black key -->
+          <div class="key"></div>
+          <div class="key black" style="left: 80px;"></div> <!-- Example black key -->
+          <div class="key"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const canvas = document.getElementById('waveform-canvas');
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width = window.innerWidth;
+    const height = canvas.height = window.innerHeight;
+    const bufferLength = 2048;
+    const audioBuffer = new Float32Array(bufferLength);
+    let audioContext;
+    let analyser;
 
-  /* Animación de las perillas */
-  a:hover .knob {
-    animation: knob-anim 2s linear infinite;
-  }
+    function setupAudio() {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const source = audioContext.createMediaElementSource(new Audio('your-audio-file.mp3'));
+      analyser = audioContext.createAnalyser();
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+      analyser.fftSize = bufferLength;
+    }
 
-  @keyframes knob-anim {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+    function draw() {
+      analyser.getFloatTimeDomainData(audioBuffer);
 
-  /* Animación de la "mano" como el gato */
-  a:hover .synth-body {
-    animation: synth-wave 560ms ease-in-out;
-  }
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0, 0, width, height);
 
-  @keyframes synth-wave {
-    0%,
-    100% {
-      transform: rotate(0);
-    }
-    20%,
-    60% {
-      transform: rotate(25deg);
-    }
-    40%,
-    80% {
-      transform: rotate(-10deg);
-    }
-  }
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'white';
+      ctx.beginPath();
+      const sliceWidth = width / bufferLength;
+      let x = 0;
 
-  @media (max-width: 500px) {
-    a:hover .synth-body {
-      animation: none;
+      audioBuffer.forEach((value, i) => {
+        const y = (value + 1) * height / 2;
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+        x += sliceWidth;
+      });
+
+      ctx.lineTo(width, height / 2);
+      ctx.stroke();
+
+      requestAnimationFrame(draw);
     }
-    a .synth-body {
-      animation: synth-wave 560ms ease-in-out;
-    }
-  }
-</style>
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    setupAudio();
+    draw();
+  </script>
+</body>
+</html>
 
 
 
