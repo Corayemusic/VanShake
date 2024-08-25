@@ -1,36 +1,14 @@
+---
 import { Icon } from "astro-icon/components";
 import ThemeSwitcher from "~/components/theme-switcher.astro";
-import type { NavItem, FooterLink } from "~/types";
+import type { NavItem } from "~/types";
 
 const navItems: Array<NavItem> = [
   { title: "Servicios", url: "#features" },
   { title: "Workshops", url: "#compatibility" },
   { title: "Producciones", url: "#showcase" },
 ];
-
-const footerLinks: Array<FooterLink> = [
-  {
-    url: "https://www.instagram.com/van_shake/",
-    description: "Instagram",
-    icon: "fa-brands:instagram",
-  },
-  {
-    url: "https://www.tiktok.com/@van_shake",
-    description: "TikTok",
-    icon: "fa-brands:tiktok",
-  },
-  {
-    url: "https://wa.me/1234567890",
-    description: "WhatsApp",
-    icon: "fa-brands:whatsapp",
-  },
-  {
-    url: "https://www.linkedin.com/company/van-shake/",
-    description: "LinkedIn",
-    icon: "fa-brands:linkedin",
-  },
-];
-
+---
 
 <header
   id="page-header"
@@ -99,14 +77,62 @@ const footerLinks: Array<FooterLink> = [
       </div>
     </div>
   </div>
-  <div class="absolute bottom-0 left-0 flex gap-4 p-4">
-    {
-      socialLinks.map(({ url, icon, description }) => (
-        <a href={url} aria-label={description} class="text-white hover:text-gray-400">
-          <Icon name={icon} class="size-6" />
-        </a>
-      ))
-    }
-  </div>
 </header>
 
+<script>
+  import MicroModal from "micromodal";
+  import invariant from "tiny-invariant";
+
+  const menuModalId = "menu-modal";
+
+  const header = document.querySelector("#page-header") as HTMLElement;
+  const page = document.documentElement;
+  const menu = document.querySelector(`#${menuModalId} ul`);
+  const openNavButton = document.querySelector("#open-nav-button");
+  const closeNavButton = document.querySelector("#close-nav-button");
+
+  invariant(header, "header should not be null");
+  invariant(menu, "menu should not be null");
+  invariant(openNavButton, "openNavButton should not be null");
+  invariant(closeNavButton, "closeNavButton should not be null");
+
+  const openMenu = () => {
+    MicroModal.show(menuModalId, { disableScroll: true });
+  };
+
+  const closeMenu = () => {
+    MicroModal.close(menuModalId);
+  };
+
+  openNavButton.addEventListener("click", openMenu);
+  closeNavButton.addEventListener("click", closeMenu);
+
+  document.addEventListener("scroll", () => {
+    const d = page.clientHeight - page.scrollTop - header.offsetHeight;
+    header.classList.toggle("fixed-header", d < 0);
+  });
+
+  menu.addEventListener("click", (event) => {
+    if ((event.target as HTMLElement).tagName === "A") {
+      closeMenu();
+    }
+  });
+</script>
+
+<noscript>
+  <style>
+    #open-nav-button {
+      display: none;
+    }
+  </style>
+</noscript>
+
+<style>
+  .fixed-header {
+    @apply fixed bottom-auto top-0;
+    @apply border-default bg-default text-default;
+  }
+  .modal.is-open {
+    @apply block;
+  }
+</style>
