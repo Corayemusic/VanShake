@@ -1,19 +1,36 @@
----
 import { Icon } from "astro-icon/components";
 import ThemeSwitcher from "~/components/theme-switcher.astro";
-import type { NavItem } from "~/types";
+import type { NavItem, FooterLink } from "~/types";
 
 const navItems: Array<NavItem> = [
   { title: "Servicios", url: "#features" },
   { title: "Workshops", url: "#compatibility" },
   { title: "Producciones", url: "#showcase" },
-import { Icon } from "astro-icon/components";
-import HeroImage from "~/components/hero-image.astro";
-import type { FooterLink } from "~/types";
-
-
 ];
----
+
+const footerLinks: Array<FooterLink> = [
+  {
+    url: "https://www.instagram.com/van_shake/",
+    description: "Instagram",
+    icon: "fa-brands:instagram",
+  },
+  {
+    url: "https://www.tiktok.com/@van_shake",
+    description: "TikTok",
+    icon: "fa-brands:tiktok",
+  },
+  {
+    url: "https://wa.me/1234567890",
+    description: "WhatsApp",
+    icon: "fa-brands:whatsapp",
+  },
+  {
+    url: "https://www.linkedin.com/company/van-shake/",
+    description: "LinkedIn",
+    icon: "fa-brands:linkedin",
+  },
+];
+
 
 <header
   id="page-header"
