@@ -7,6 +7,32 @@ const navItems: Array<NavItem> = [
   { title: "Servicios", url: "#features" },
   { title: "Workshops", url: "#compatibility" },
   { title: "Producciones", url: "#showcase" },
+import { Icon } from "astro-icon/components";
+import HeroImage from "~/components/hero-image.astro";
+import type { FooterLink } from "~/types";
+
+const links: Array<FooterLink> = [
+  {
+    url: "https://www.instagram.com/yourusername/",
+    description: "Instagram",
+    icon: "fa-brands:instagram", // Ícono de Instagram
+  },
+  {
+    url: "https://www.tiktok.com/@yourusername",
+    description: "TikTok",
+    icon: "fa-brands:tiktok", // Ícono de TikTok
+  },
+  {
+    url: "https://wa.me/1234567890",
+    description: "WhatsApp",
+    icon: "fa-brands:whatsapp", // Ícono de WhatsApp
+  },
+  {
+    url: "https://www.linkedin.com/in/yourusername/",
+    description: "LinkedIn",
+    icon: "fa-brands:linkedin", // Ícono de LinkedIn
+  },
+
 ];
 ---
 
