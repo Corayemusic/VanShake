@@ -19,11 +19,11 @@
       <!-- Cuerpo del sintetizador -->
       <rect x="0" y="0" width="80" height="40" fill="black" stroke="white" />
 
-      <!-- Teclas del sintetizador con eventos onclick -->
-      <rect class="key" x="10" y="20" width="10" height="15" fill="white" onclick="playSound(0)" />
-      <rect class="key" x="25" y="20" width="10" height="15" fill="white" onclick="playSound(1)" />
-      <rect class="key" x="40" y="20" width="10" height="15" fill="white" onclick="playSound(2)" />
-      <rect class="key" x="55" y="20" width="10" height="15" fill="white" onclick="playSound(3)" />
+      <!-- Teclas del sintetizador -->
+      <rect class="key" x="10" y="20" width="10" height="15" fill="white" />
+      <rect class="key" x="25" y="20" width="10" height="15" fill="white" />
+      <rect class="key" x="40" y="20" width="10" height="15" fill="white" />
+      <rect class="key" x="55" y="20" width="10" height="15" fill="white" />
 
       <!-- Perillas del sintetizador -->
       <circle class="knob" cx="15" cy="10" r="3" fill="gray" />
@@ -35,7 +35,38 @@
 </a>
 
 <style>
-  /* Estilos del sintetizador */
+  /* Estilo y animaciones del sintetizador en el corner */
+
+  /* Animación de las teclas */
+  a:hover .key {
+    animation: key-anim 0.5s ease-in-out infinite;
+  }
+
+  @keyframes key-anim {
+    0%,
+    100% {
+      fill: white;
+    }
+    50% {
+      fill: yellow;
+    }
+  }
+
+  /* Animación de las perillas */
+  a:hover .knob {
+    animation: knob-anim 2s linear infinite;
+  }
+
+  @keyframes knob-anim {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Animación de la "mano" como el gato */
   a:hover .synth-body {
     animation: synth-wave 560ms ease-in-out;
   }
@@ -54,22 +85,17 @@
       transform: rotate(-10deg);
     }
   }
+
+  @media (max-width: 500px) {
+    a:hover .synth-body {
+      animation: none;
+    }
+    a .synth-body {
+      animation: synth-wave 560ms ease-in-out;
+    }
+  }
 </style>
 
-<!-- Agregamos los sonidos -->
-<audio id="synth-sound-0" src="path/to/sound1.mp3"></audio>
-<audio id="synth-sound-1" src="path/to/sound2.mp3"></audio>
-<audio id="synth-sound-2" src="path/to/sound3.mp3"></audio>
-<audio id="synth-sound-3" src="path/to/sound4.mp3"></audio>
-
-<script>
-  // Función para reproducir sonido al hacer clic en las teclas
-  function playSound(index) {
-    const sound = document.getElementById(`synth-sound-${index}`);
-    sound.currentTime = 0; // Reinicia el sonido si ya está reproduciéndose
-    sound.play();
-  }
-</script>
 
 
 
