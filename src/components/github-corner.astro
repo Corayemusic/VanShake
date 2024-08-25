@@ -3,27 +3,39 @@
   aria-label="View source on GitHub"
   class="absolute right-0 top-0 z-10 text-black hover:text-black focus:ring-0 focus:ring-offset-0"
 >
-  <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true">
+  <!-- SVG del sintetizador en el corner -->
+  <svg
+    class="fill-white"
+    width="80"
+    height="80"
+    viewBox="0 0 250 250"
+    aria-hidden="true"
+    style="position: absolute; top: 0; right: 0;"
+  >
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+
     <!-- SVG del sintetizador -->
-    <!-- Cuerpo del sintetizador -->
-    <rect x="10" y="30" width="80" height="40" fill="black" stroke="white" />
+    <g class="synth-body" transform="translate(50, 50)">
+      <!-- Cuerpo del sintetizador -->
+      <rect x="0" y="0" width="80" height="40" fill="black" stroke="white" />
 
-    <!-- Teclas del sintetizador -->
-    <rect class="key" x="20" y="50" width="10" height="15" fill="white" />
-    <rect class="key" x="35" y="50" width="10" height="15" fill="white" />
-    <rect class="key" x="50" y="50" width="10" height="15" fill="white" />
-    <rect class="key" x="65" y="50" width="10" height="15" fill="white" />
+      <!-- Teclas del sintetizador -->
+      <rect class="key" x="10" y="20" width="10" height="15" fill="white" />
+      <rect class="key" x="25" y="20" width="10" height="15" fill="white" />
+      <rect class="key" x="40" y="20" width="10" height="15" fill="white" />
+      <rect class="key" x="55" y="20" width="10" height="15" fill="white" />
 
-    <!-- Perillas del sintetizador -->
-    <circle class="knob" cx="25" cy="40" r="3" fill="gray" />
-    <circle class="knob" cx="40" cy="40" r="3" fill="gray" />
-    <circle class="knob" cx="55" cy="40" r="3" fill="gray" />
-    <circle class="knob" cx="70" cy="40" r="3" fill="gray" />
+      <!-- Perillas del sintetizador -->
+      <circle class="knob" cx="15" cy="10" r="3" fill="gray" />
+      <circle class="knob" cx="30" cy="10" r="3" fill="gray" />
+      <circle class="knob" cx="45" cy="10" r="3" fill="gray" />
+      <circle class="knob" cx="60" cy="10" r="3" fill="gray" />
+    </g>
   </svg>
 </a>
 
 <style>
-  /* Estilo y animaciones del sintetizador */
+  /* Estilo y animaciones del sintetizador en el corner */
 
   /* Animación de las teclas */
   a:hover .key {
@@ -31,7 +43,8 @@
   }
 
   @keyframes key-anim {
-    0%, 100% {
+    0%,
+    100% {
       fill: white;
     }
     50% {
@@ -52,4 +65,34 @@
       transform: rotate(360deg);
     }
   }
+
+  /* Animación de la "mano" como el gato */
+  a:hover .synth-body {
+    animation: synth-wave 560ms ease-in-out;
+  }
+
+  @keyframes synth-wave {
+    0%,
+    100% {
+      transform: rotate(0);
+    }
+    20%,
+    60% {
+      transform: rotate(-25deg);
+    }
+    40%,
+    80% {
+      transform: rotate(10deg);
+    }
+  }
+
+  @media (max-width: 500px) {
+    a:hover .synth-body {
+      animation: none;
+    }
+    a .synth-body {
+      animation: synth-wave 560ms ease-in-out;
+    }
+  }
 </style>
+
