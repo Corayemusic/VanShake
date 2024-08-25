@@ -3,32 +3,16 @@
   aria-label="View source on GitHub"
   class="absolute right-0 top-0 z-10 text-black hover:text-black focus:ring-0 focus:ring-offset-0"
 >
-  <svg
-    class="fill-white"
-    width="80"
-    height="80"
-    viewBox="0 0 250 250"
-    aria-hidden="true"
-  >
-    <!-- Triángulo blanco en la esquina -->
-    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
-    <!-- Síntesis de sintetizador -->
-    <path
-      d="M40,30 H210 V150 H40 Z M60,50 V110 H90 V50 Z M120,50 V110 H150 V50 Z M180,50 V110 H210 V50 Z M80,130 H130 V150 H80 Z"
-      fill="currentColor"
-      style="transform-origin: 120px 90px;"
-      class="octo-arm"
-    ></path>
-    <path
-      d="M150,160 H40 V140 H150 Z M150,120 H40 V100 H150 Z M150,80 H40 V60 H150 Z"
-      fill="currentColor"
-      class="octo-body"
-    ></path>
-  </svg>
+  <!-- Usa el archivo SVG como fuente -->
+  <img
+    src="/assets/icons/logomark.svg"
+    alt="Synthesizer Icon"
+    class="w-20 h-20 fill-white"
+  />
 </a>
 
 <style>
-  a:hover .octo-arm {
+  a:hover img {
     animation: synth-wave 560ms ease-in-out;
   }
   @keyframes synth-wave {
@@ -46,16 +30,15 @@
     }
   }
   @media (max-width: 500px) {
-    a:hover .octo-arm {
+    a:hover img {
       animation: none;
     }
-    a .octo-arm {
+    a img {
       animation: synth-wave 560ms ease-in-out;
     }
   }
 </style>
 
-     
 
 
 
