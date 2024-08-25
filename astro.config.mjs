@@ -4,6 +4,6 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL || "van-shake.vercel.app",
+  site: "https://astro-moon-landing.netlify.app/",
   integrations: [tailwind(), icon()],
 });
