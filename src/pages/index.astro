@@ -10,7 +10,7 @@ import Splash from "~/components/splash.astro";
 import "~/styles/index.css";
 
 const { generator, site } = Van Shake;
-const image = new URL("astronaut.png", site);
+const image = new URL(`astronaut.png?v=${Date.now()}`, site);
 const description = "Sintesís y diseño sonoro";
 ---
 
